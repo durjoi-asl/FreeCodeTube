@@ -15,25 +15,33 @@ class m200810_075157_create_videos_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('{{%videos}}', [
-            'id' => $this->primaryKey(),
+        $this->createTable('{{%video}}', [
+            // 'id' => $this->primaryKey(),
             'video_id' => $this->string(16)->notNull(),
             'title' => $this->string(512)->notNull(),
-            'description' => $this->text()(),
+            'description' => $this->text(),
+            'tags' => $this->string(512),
+            'status' => $this->integer(1),
+            'has_thumbnail' => $this->boolean(),
+            'video_name' => $this->string(512),
+            'created_at' => $this->integer(11),
+            'updated_at' => $this->integer(11),
             'created_by' => $this->integer(11),
         ]);
 
+        // add primary key
+        $this->addPrimaryKey('PK_video_video_id', '{{%video}}', 'video_id');
         // creates index for column `created_by`
         $this->createIndex(
-            '{{%idx-videos-created_by}}',
-            '{{%videos}}',
+            '{{%idx-video-created_by}}',
+            '{{%video}}',
             'created_by'
         );
 
         // add foreign key for table `{{%user}}`
         $this->addForeignKey(
-            '{{%fk-videos-created_by}}',
-            '{{%videos}}',
+            '{{%fk-video-created_by}}',
+            '{{%video}}',
             'created_by',
             '{{%user}}',
             'id',
@@ -48,16 +56,16 @@ class m200810_075157_create_videos_table extends Migration
     {
         // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
-            '{{%fk-videos-created_by}}',
-            '{{%videos}}'
+            '{{%fk-video-created_by}}',
+            '{{%video}}'
         );
 
         // drops index for column `created_by`
         $this->dropIndex(
-            '{{%idx-videos-created_by}}',
-            '{{%videos}}'
+            '{{%idx-video-created_by}}',
+            '{{%video}}'
         );
 
-        $this->dropTable('{{%videos}}');
+        $this->dropTable('{{%video}}');
     }
 }
