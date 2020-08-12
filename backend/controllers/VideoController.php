@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * VideoController implements the CRUD actions for Video model.
@@ -21,6 +22,15 @@ class VideoController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+              'class' => AccessControl::class,
+              'rules' => [
+                [
+                  'allow' => true,
+                  'roles' => ['@']
+                ]
+              ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -91,7 +101,7 @@ class VideoController extends Controller
         $model = $this->findModel($id);
 
         $model->thumbnail = UploadedFile::getInstanceByName('thumbnail');
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['update', 'id' => $model->video_id]);
         }
