@@ -3,12 +3,12 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use backend\assets\AppAsset;
+// use backend\assets\AppAsset;
 use yii\helpers\Html;
-
+//
 use common\widgets\Alert;
 
-AppAsset::register($this);
+// AppAsset::register($this);
 
 $this->beginContent('@backend/views/layouts/base.php');
 ?>
