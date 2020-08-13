@@ -119,6 +119,16 @@ class Video extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[VideoLikes]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVideoLikes()
+    {
+        return $this->hasMany(VideoLike::className(), ['video_id' => 'video_id']);
+    }
+
+    /**
      * {@inheritdoc}
      * @return \common\models\query\VideoQuery the active query used by this AR class.
      */

@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 /**
 * User: Mehedi Hassan Durjoi
 * Date: 13/8/2020
@@ -22,16 +23,16 @@ use yii\helpers\Url;
       <div class="">
         <p class="text-muted"><?php echo $model->getVideoViews()->count() ?> views . <?php echo Yii::$app->formatter->asDate($model->created_at) ?></p>
       </div>
+      <?php Pjax::begin(['clientOptions' => ['method' => 'POST']]) ?>
       <div class="">
-          <button id="videoLike"
-            class="btn btn-sm <?php echo $model->isLikeBy(Yii::$app->user->id) ? 'btn-outline-primary' : 'btn-outline-secondary' ?>" data="<?php echo $model->video_id ?>">
-                <i class="fas fa-thumbs-up"></i> 10
-          </button>
 
-          <button class="btn btn-sm btn-outline-secondary">
-            <i class="fas fa-thumbs-down"></i> 3
-          </button>
+          <?php echo $this->render('_button', [
+            'model' => $model
+            ]) ?>
+
+
       </div>
+      <?php Pjax::end() ?>
     </div>
 
   </div>

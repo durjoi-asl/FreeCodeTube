@@ -76,6 +76,10 @@ class VideoController extends \yii\web\Controller
         $videoLikeDislike->delete();
         $videoLike = $this->saveLikeDislike($id, $userId, VideoLike::TYPE_LIKE);
       }
+
+      return $this->renderAjax('_button',[
+        'model' => $video
+      ]);
     }
 
     protected function findVideo($id) {
