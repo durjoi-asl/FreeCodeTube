@@ -82,6 +82,27 @@ class VideoController extends \yii\web\Controller
       ]);
     }
 
+    public function actionDislike($id) {
+      $video = $this->findVideo($id);
+
+      $userId = \Yii::$app->user->id;
+
+      $videoLikeDislike = VideoLike::find()->userIdVideoId($userId, $id)->one();
+
+      if(!$videoLikeDislike) {
+        $videoDislike = $this->saveLikeDislike($id, $userId, VideoLike::TYPE_DISLIKE);
+      } else if($videoLikeDislike->type === VideoLike::TYPE_DISLIKE) {
+        $videoLikeDislike->delete();
+      } else {
+        $videoLikeDislike->delete();
+        $videoLike = $this->saveLikeDislike($id, $userId, VideoLike::TYPE_DISLIKE);
+      }
+
+      return $this->renderAjax('_button',[
+        'model' => $video
+      ]);
+    }
+
     protected function findVideo($id) {
       $video = Video::findOne($id);
 

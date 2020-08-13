@@ -219,4 +219,11 @@ class Video extends \yii\db\ActiveRecord
                 ->liked()
                 ->one();
     }
+
+    public function isDislikeBy($userId) {
+      return VideoLike::find()
+                ->userIdVideoId($userId, $this->video_id)
+                ->disliked()
+                ->one();
+    }
 }
