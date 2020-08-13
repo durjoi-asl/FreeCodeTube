@@ -66,13 +66,16 @@ class VideoController extends \yii\web\Controller
 
       $userId = \Yii::$app->user->id;
 
-      $videoLike = new VideoLike();
-      $videoLike->video_id = $id;
-      $videoLike->user_id = $userId;
-      $videoLike->created_at = time();
-      $videoLike->save();
+      $videoLikeDislike = VideoLike::find()->userIdVideoId($userId, $id)->one();
 
-
+      if(!$videoLikeDislike) {
+        $videoLike = $this->saveLikeDislike($id, $userId, VideoLike::TYPE_LIKE);
+      } else if($videoLikeDislike->type === VideoLike::TYPE_LIKE) {
+        $videoLikeDislike->delete();
+      } else {
+        $videoLikeDislike->delete();
+        $videoLike = $this->saveLikeDislike($id, $userId, VideoLike::TYPE_LIKE);
+      }
     }
 
     protected function findVideo($id) {
@@ -83,6 +86,15 @@ class VideoController extends \yii\web\Controller
       }
 
       return $video;
+    }
+
+    protected function saveLikeDislike($videoId, $userId, $type) {
+      $videoLikeDislike = new VideoLike();
+      $videoLikeDislike->video_id = $videoId;
+      $videoLikeDislike->type = $type;
+      $videoLikeDislike->user_id = $userId;
+      $videoLikeDislike->created_at = time();
+      $videoLikeDislike->save();
     }
 
 }

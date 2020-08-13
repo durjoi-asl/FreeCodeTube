@@ -24,7 +24,7 @@ use yii\helpers\Url;
       </div>
       <div class="">
           <button id="videoLike"
-            class="btn btn-sm btn-outline-primary" data="<?php echo $model->video_id ?>">
+            class="btn btn-sm <?php echo $model->isLikeBy(Yii::$app->user->id) ? 'btn-outline-primary' : 'btn-outline-secondary' ?>" data="<?php echo $model->video_id ?>">
                 <i class="fas fa-thumbs-up"></i> 10
           </button>
 

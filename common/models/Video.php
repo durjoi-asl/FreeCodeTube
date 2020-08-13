@@ -8,7 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\imagine\Image;
 use Imagine\Image\Box;
-
+use common\models\VideoLike;
 /**
  * This is the model class for table "{{%video}}".
  *
@@ -201,5 +201,12 @@ class Video extends \yii\db\ActiveRecord
       if(file_exists($thumbnailPath)) {
         unlink($thumbnailPath);
       }
+    }
+
+    public function isLikeBy($userId) {
+      return VideoLike::find()
+                ->userIdVideoId($userId, $this->video_id)
+                ->liked()
+                ->one();
     }
 }
