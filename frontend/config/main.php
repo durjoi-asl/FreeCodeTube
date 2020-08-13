@@ -10,6 +10,7 @@ return [
     'id' => 'app-frontend',
     'name' => 'FreeCodeTube',
     'basePath' => dirname(__DIR__),
+    'defaultRoute' => 'video/index',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
