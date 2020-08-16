@@ -48,8 +48,8 @@ class VideoController extends \yii\web\Controller
     public function actionView($id) {
       $this->layout = 'auth';
 
+      // counting View
       $video = $this->findVideo($id);
-
       $videoView = new VideoView();
       $videoView->video_id = $id;
       $videoView->user_id = \Yii::$app->user->id;

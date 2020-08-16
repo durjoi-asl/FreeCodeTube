@@ -48,16 +48,4 @@ class VideoLikeQuery extends \yii\db\ActiveQuery
     public function disliked() {
       return $this->andWhere(['type' => VideoLike::TYPE_DISLIKE]);
     }
-
-    public function getLikes() {
-      return $this->andWhere([
-        'type' => VideoLike::TYPE_LIKE
-      ]);
-    }
-
-    public function getDisLikes() {
-      return $this->andWhere([
-        'type' => VideoLike::TYPE_DISLIKE
-      ]);
-    }
 }
